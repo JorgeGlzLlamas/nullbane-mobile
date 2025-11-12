@@ -9,7 +9,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function WelcomeScreen() {
+export default function Index() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -32,7 +32,7 @@ export default function WelcomeScreen() {
         </Box>
 
         <Box>
-          <Text className="text-center text-secondary-500" bold size="2xl">
+          <Text className="text-center text-primary-500" bold size="2xl">
             El nexo oficial de la comunidad.
           </Text>
           <Text className="text-center mt-1 text-primary-950" bold size="2xl">
@@ -41,14 +41,14 @@ export default function WelcomeScreen() {
         </Box>
         <Button
           onPress={() => {
-            router.replace('/(tabs)/explore');
+            router.replace('/login');
           }}
           className="w-3/4 rounded-full h-[50px] bg-typography-700 active:!bg-secondary-500"
         >
           <ButtonText className="text-3xl text-background-0">Comenzar</ButtonText>
         </Button>
       </Box>
-      <Text className="text-center text-secondary-500" bold size="lg">
+      <Text className="text-center text-primary-500" bold size="lg">
         Tu comunidad, siempre conectada.
       </Text>
     </Box>
