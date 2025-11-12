@@ -9,7 +9,7 @@ export const config = {
     '--color-primary-200': '115 115 115',
     '--color-primary-300': '102 102 102',
     '--color-primary-400': '82 82 82',
-    '--color-primary-500': '51 51 51',
+    '--color-primary-500': '45 64 44',
     '--color-primary-600': '41 41 41',
     '--color-primary-700': '31 31 31',
     '--color-primary-800': '13 13 13',
@@ -23,7 +23,7 @@ export const config = {
     '--color-secondary-200': '242 242 242',
     '--color-secondary-300': '237 237 237',
     '--color-secondary-400': '230 230 231',
-    '--color-secondary-500': '217 217 219',
+    '--color-secondary-500': '156 166 151',
     '--color-secondary-600': '198 199 199',
     '--color-secondary-700': '189 189 189',
     '--color-secondary-800': '177 177 177',
@@ -109,9 +109,9 @@ export const config = {
     '--color-typography-400': '163 163 163',
     '--color-typography-500': '140 140 140',
     '--color-typography-600': '115 115 115',
-    '--color-typography-700': '82 82 82',
+    '--color-typography-700': '26 38 26',
     '--color-typography-800': '64 64 64',
-    '--color-typography-900': '38 38 39',
+    '--color-typography-900': '13 13 13',
     '--color-typography-950': '23 23 23',
 
     /* Outline */
@@ -121,7 +121,7 @@ export const config = {
     '--color-outline-200': '221 220 219',
     '--color-outline-300': '211 211 211',
     '--color-outline-400': '165 163 163',
-    '--color-outline-500': '140 141 141',
+    '--color-outline-500': '156 166 151',
     '--color-outline-600': '115 116 116',
     '--color-outline-700': '83 82 82',
     '--color-outline-800': '65 65 65',
@@ -129,7 +129,7 @@ export const config = {
     '--color-outline-950': '26 23 23',
 
     /* Background */
-    '--color-background-0': '255 255 255',
+    '--color-background-0': '213 242 208',
     '--color-background-50': '246 246 246',
     '--color-background-100': '242 241 241',
     '--color-background-200': '220 219 219',
@@ -161,7 +161,7 @@ export const config = {
     '--color-primary-200': '197 197 197',
     '--color-primary-300': '212 212 212',
     '--color-primary-400': '221 221 221',
-    '--color-primary-500': '230 230 230',
+    '--color-primary-500': '62 83 115',
     '--color-primary-600': '240 240 240',
     '--color-primary-700': '250 250 250',
     '--color-primary-800': '253 253 253',
@@ -175,7 +175,7 @@ export const config = {
     '--color-secondary-200': '39 39 39',
     '--color-secondary-300': '44 44 44',
     '--color-secondary-400': '56 57 57',
-    '--color-secondary-500': '63 64 64',
+    '--color-secondary-500': '124 149 167',
     '--color-secondary-600': '86 86 86',
     '--color-secondary-700': '110 110 110',
     '--color-secondary-800': '135 135 135',
@@ -261,9 +261,9 @@ export const config = {
     '--color-typography-400': '140 140 140',
     '--color-typography-500': '163 163 163',
     '--color-typography-600': '212 212 212',
-    '--color-typography-700': '219 219 220',
+    '--color-typography-700': '205 217 186',
     '--color-typography-800': '229 229 229',
-    '--color-typography-900': '245 245 245',
+    '--color-typography-900': '205 217 186',
     '--color-typography-950': '254 254 255',
 
     /* Outline */
@@ -273,7 +273,7 @@ export const config = {
     '--color-outline-200': '83 82 82',
     '--color-outline-300': '115 116 116',
     '--color-outline-400': '140 141 141',
-    '--color-outline-500': '165 163 163',
+    '--color-outline-500': '124 149 167',
     '--color-outline-600': '211 211 211',
     '--color-outline-700': '221 220 219',
     '--color-outline-800': '230 230 230',
@@ -281,7 +281,7 @@ export const config = {
     '--color-outline-950': '253 254 254',
 
     /* Background */
-    '--color-background-0': '18 18 18',
+    '--color-background-0': '22 39 64',
     '--color-background-50': '39 38 37',
     '--color-background-100': '65 64 64',
     '--color-background-200': '83 82 82',
@@ -298,7 +298,7 @@ export const config = {
     '--color-background-error': '66 43 43',
     '--color-background-warning': '65 47 35',
     '--color-background-success': '28 43 33',
-    '--color-background-muted': '51 51 51',
+    '--color-background-muted': '50 50 50',
     '--color-background-info': '26 40 46',
 
     /* Focus Ring Indicator  */
