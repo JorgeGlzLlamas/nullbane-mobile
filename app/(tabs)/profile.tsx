@@ -9,14 +9,6 @@ export default function UserScreen() {
     const router = useRouter();
     return (
         <View style={styles.container}>
-            <Button 
-                variant="solid"
-                size="md"
-                action="primary"
-                onPress={() => router.push('/inicio_sesion')}>
-                <ButtonText>Iniciar Sesión</ButtonText>
-            </Button>
-
             <Button variant="outline" size="md" action="primary">
                 <ButtonText>Registrarse</ButtonText>
             </Button>

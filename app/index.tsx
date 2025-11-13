@@ -40,9 +40,7 @@ export default function Index() {
           </Text>
         </Box>
         <Button
-          onPress={() => {
-            router.replace('/login');
-          }}
+          onPress={() => { router.replace('/login'); }}
           className="w-3/4 rounded-full h-[50px] bg-typography-700 active:!bg-secondary-500"
         >
           <ButtonText className="text-3xl text-background-0">Comenzar</ButtonText>
