@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 
 import { Box } from '@/components/ui/box';
-import { Button, ButtonText } from '@/components/ui/button';
+
 import { Card } from '@/components/ui/card';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
@@ -36,7 +36,7 @@ export default function Index() {
             >
                 <Box className="gap-y-4 pb-4">
                     <Pressable
-                        onPress={() => { router.push('/(tabs)/chat'); }}
+                        onPress={() => { router.push('/(tabs)/chats'); }}
                         className="active:opacity-80"
                     >
                         <Card size="md" variant="filled" className="w-full h-[290px] bg-secondary-500 rounded-xl">
@@ -57,7 +57,7 @@ export default function Index() {
                     </Pressable>
 
                     <Pressable
-                        onPress={() => { router.push('/(tabs)/chat'); }}
+                        onPress={() => { router.push('/(tabs)/chats'); }}
                         className="active:opacity-80"
                     >
                         <Card size="md" variant="filled" className="w-full h-[290px] bg-secondary-500 rounded-xl">
@@ -78,7 +78,7 @@ export default function Index() {
                     </Pressable>
 
                     <Pressable
-                        onPress={() => { router.push('/(tabs)/chat'); }}
+                        onPress={() => { router.push('/(tabs)/chats'); }}
                         className="active:opacity-80"
                     >
                         <Card size="md" variant="filled" className="w-full h-[290px] bg-secondary-500 rounded-xl">
@@ -103,7 +103,7 @@ export default function Index() {
             <Fab
                 size="lg"
                 placement="bottom right"
-                onPress={() => { router.push('/(tabs)/chat'); }}
+                onPress={() => { router.push('/(tabs)/chats'); }}
                 className="bg-primary-500 active:!bg-primary-600"
             >
                 <FabIcon as={PlusIcon} size="xl" />

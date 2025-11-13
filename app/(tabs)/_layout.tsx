@@ -46,9 +46,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="chat"
+                name="chats"
                 options={{
-                    title: 'Chat',
+                    title: 'Chats',
                     tabBarIcon: ({ color }) => <Entypo name="chat" size={28} color={color} />,
                 }}
             />
