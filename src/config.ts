@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'https://nullbane-backend-pruebas.up.railway.app';

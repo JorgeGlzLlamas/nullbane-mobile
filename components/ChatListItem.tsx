@@ -6,48 +6,75 @@ import { Text } from '@/components/ui/text';
 import { Heading } from '@/components/ui/heading';
 import { Avatar, AvatarFallbackText, AvatarImage } from '@/components/ui/avatar';
 
+// Imports de API
+import { ChatListItem as ChatItemType } from '../src/types/api'; // Asegúrate de tener este tipo
+import { API_BASE_URL } from '../src/config';
+
 type ChatListItemProps = {
-    id: string;
-    name: string;
-    lastMessage: string;
-    date: string;
-    avatarUrl: string;
+    chat: ChatItemType; // Ahora recibe el objeto completo
 };
 
-export function ChatListItem({ id, name, lastMessage, date, avatarUrl }: ChatListItemProps) {
+export function ChatListItem({ chat }: ChatListItemProps) {
     const router = useRouter();
     const [loadFailed, setLoadFailed] = useState(false);
+    
+    const user = chat.other_user;
+    const avatarUrl = user.avatar_url ? `${API_BASE_URL}${user.avatar_url}` : null;
     const hasValidAvatar = !!avatarUrl;
 
-    return (
+    const handlePress = () => {
+        router.push({
+            pathname: "/chat/[id]",
+            params: { 
+                id: chat.friendship_id,
+                name: chat.other_user.full_name,
+                avatarUrl: chat.other_user.avatar_url || '' 
+            } 
+        });
+    };
 
+    // Formato de fecha simple
+    const formatDate = (isoString: string | null) => {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+        // Si es hoy, mostrar hora, si no, mostrar fecha
+        const isToday = new Date().toDateString() === date.toDateString();
+        return isToday 
+            ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : date.toLocaleDateString();
+    };
+
+    return (
         <Pressable 
-            className="flex-row items-center pt-2 pb-2 active:bg-secondary-100 px-6"
-            onPress={() => router.push(`/(tabs)`)}
+            className="flex-row items-center pt-3 pb-3 active:bg-secondary-100 px-6 border-b border-outline-50"
+            onPress={handlePress}
         >
             <Avatar size="md" className="mr-3">
                 { (hasValidAvatar && !loadFailed) ? (
                     <AvatarImage 
-                        source={{ uri: avatarUrl }} 
-                        alt={name}
+                        source={{ uri: avatarUrl! }} 
+                        alt={user.full_name}
                         onError={() => setLoadFailed(true)}
                     />
                 ) : (
-                    <AvatarFallbackText>{name.substring(0, 2).toUpperCase()}</AvatarFallbackText>
+                    <AvatarFallbackText>{user.full_name.substring(0, 2).toUpperCase()}</AvatarFallbackText>
                 )}
             </Avatar>
 
             <Box className="flex-1">
                 <Heading size="md" numberOfLines={1}>
-                    {name}
+                    {user.full_name}
                 </Heading>
-                <Text size="lg" numberOfLines={1} className="text-typography-500">
-                    {lastMessage}
+                <Text size="sm" numberOfLines={1} className="text-typography-500 mt-1">
+                    {chat.last_message_content || 'Iniciar conversación'}
                 </Text>
             </Box>
-            <Text size="sm" className="text-typography-500 ml-2">
-                {date}
-            </Text>
+            
+            {chat.last_message_at && (
+                <Text size="xs" className="text-typography-400 ml-2 self-start mt-1">
+                    {formatDate(chat.last_message_at)}
+                </Text>
+            )}
         </Pressable>
     );
 }

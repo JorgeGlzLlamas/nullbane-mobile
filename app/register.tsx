@@ -8,8 +8,6 @@ import {
     FormControlError,
     FormControlErrorIcon,
     FormControlErrorText,
-    FormControlHelper,
-    FormControlHelperText,
 } from '@/components/ui/form-control';
 
 import { Input, InputField, InputSlot, InputIcon } from '@/components/ui/input';
@@ -19,18 +17,113 @@ import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { EyeIcon, EyeOffIcon, AlertCircleIcon } from 'lucide-react-native';
 
+// --- NUEVOS IMPORTS ---
+import { API_BASE_URL } from '@/src/config';
+import { ActivityIndicator } from 'react-native';
+import { Icon } from '@/components/ui/icon';
 
-export default function Login() {
+// Tipo para el detalle del error de validación de Pydantic
+interface ValidationError {
+    loc: (string | number)[];
+    msg: string;
+    type: string;
+}
+
+export default function RegisterScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
 
+    // --- Estados del Formulario ---
+    const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState(''); // Opcional
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    
+    // Estado para mostrar/ocultar (compartido, como en tu original)
     const [showPassword, setShowPassword] = useState(false);
     const handleState = () => {
         setShowPassword((prev) => !prev);
     };
+
+    // --- Estados de API y Errores ---
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formError, setFormError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState('');
+    const [firstNameError, setFirstNameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmError, setConfirmError] = useState('');
+
+    const handleRegister = async () => {
+        // 1. Limpiar errores
+        setFormError(null);
+        setEmailError('');
+        setFirstNameError('');
+        setPasswordError('');
+        setConfirmError('');
+        setIsSubmitting(true);
+
+        try {
+            const body = {
+                email,
+                first_name: firstName,
+                last_name: lastName || null, // Enviar null si está vacío
+                password,
+                confirm_password: confirmPassword,
+            };
+
+            const response = await fetch(`${API_BASE_URL}/api/v1/users/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+
+            if (response.status === 201) {
+                router.push('/login');
+                return;
+            }
+
+            // 3. Manejo de Errores
+            const errorData = await response.json();
+
+            if (errorData.detail) {
+                // Caso A: Error de validación (422 de Pydantic)
+                if (Array.isArray(errorData.detail)) {
+                    errorData.detail.forEach((err: ValidationError) => {
+                        if (err.loc.includes('email')) {
+                            setEmailError(err.msg);
+                        } else if (err.loc.includes('first_name')) {
+                            setFirstNameError(err.msg);
+                        } else if (err.loc.includes('password')) {
+                            setPasswordError(err.msg);
+                        } else if (err.loc.includes('confirm_password')) {
+                            setConfirmError(err.msg);
+                        } else {
+                            setFormError(err.msg); // Error de validación general
+                        }
+                    });
+                } 
+                // Caso B: Error simple (400, 409 "Email ya registrado")
+                else if (typeof errorData.detail === 'string') {
+                    if (errorData.detail.toLowerCase().includes('email')) {
+                        setEmailError(errorData.detail);
+                    } else {
+                        setFormError(errorData.detail);
+                    }
+                }
+            } else {
+                setFormError('Ocurrió un error desconocido.');
+            }
+
+        } catch (e) {
+            setFormError('No se pudo conectar al servidor. Intenta de nuevo.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
 
     return (
         <Box 
@@ -47,10 +140,21 @@ export default function Login() {
                     Registro
                 </Heading>
                 <Box className="items-center gap-y-4 w-full">
+
+                    {/* --- NUEVO: Error global de API --- */}
+                    {formError && (
+                        <Box className="w-full bg-red-100 border border-red-500 p-3 rounded-lg flex-row items-center gap-x-2">
+                            <Icon as={AlertCircleIcon} size="sm" className="text-red-600" />
+                            <Text size="sm" className="text-red-700">{formError}</Text>
+                        </Box>
+                    )}
+
+                    {/* --- Email --- */}
                     <FormControl 
                         isRequired={true}
-                        // isInvalid={true}
+                        isInvalid={!!emailError}
                         className="w-full"
+                        isDisabled={isSubmitting}
                     >
                         <FormControlLabel>
                             <FormControlLabelText className="text-lg">Correo Electrónico</FormControlLabelText>
@@ -61,25 +165,25 @@ export default function Login() {
                                 placeholder="tu@correo.com"
                                 keyboardType="email-address"
                                 autoCapitalize="none"
+                                value={email}
+                                onChangeText={(text) => {
+                                    setEmail(text);
+                                    if (emailError) setEmailError('');
+                                }}
                             />
                         </Input>
-                        {/* <FormControlHelper>
-                            <FormControlHelperText>
-                                Nunca compartiremos tu correo.
-                            </FormControlHelperText>
-                        </FormControlHelper> */}
                         <FormControlError>
                             <FormControlErrorIcon as={AlertCircleIcon} size="sm" />
-                            <FormControlErrorText>
-                                Correo no válido. Este correo ya está registrado.
-                            </FormControlErrorText>
+                            <FormControlErrorText>{emailError}</FormControlErrorText>
                         </FormControlError>
                     </FormControl>
 
+                    {/* --- Nombre --- */}
                     <FormControl
                         isRequired={true}
-                        // isInvalid={true}
+                        isInvalid={!!firstNameError}
                         className="w-full"
+                        isDisabled={isSubmitting}
                     >
                         <FormControlLabel>
                             <FormControlLabelText className="text-lg">Nombre(s)</FormControlLabelText>
@@ -88,24 +192,23 @@ export default function Login() {
                             <InputField
                                 type="text"
                                 autoCapitalize="words"
+                                value={firstName}
+                                onChangeText={(text) => {
+                                    setFirstName(text);
+                                    if (firstNameError) setFirstNameError('');
+                                }}
                             />
                         </Input>
-                        {/* <FormControlHelper>
-                            <FormControlHelperText>
-                                Nunca compartiremos tu correo.
-                            </FormControlHelperText>
-                        </FormControlHelper> */}
                         <FormControlError>
                             <FormControlErrorIcon as={AlertCircleIcon} size="sm" />
-                            <FormControlErrorText>
-                                Correo no válido. Este correo ya está registrado.
-                            </FormControlErrorText>
+                            <FormControlErrorText>{firstNameError}</FormControlErrorText>
                         </FormControlError>
                     </FormControl>
                     
+                    {/* --- Apellido (Opcional) --- */}
                     <FormControl 
-                        // isInvalid={true}
                         className="w-full"
+                        isDisabled={isSubmitting}
                     >
                         <FormControlLabel>
                             <FormControlLabelText className="text-lg">Apellido</FormControlLabelText>
@@ -114,25 +217,19 @@ export default function Login() {
                             <InputField
                                 type="text"
                                 autoCapitalize="words"
+                                value={lastName}
+                                onChangeText={setLastName}
                             />
                         </Input>
-                        {/* <FormControlHelper>
-                            <FormControlHelperText>
-                                Nunca compartiremos tu correo.
-                            </FormControlHelperText>
-                        </FormControlHelper> */}
-                        <FormControlError>
-                            <FormControlErrorIcon as={AlertCircleIcon} size="sm" />
-                            <FormControlErrorText>
-                                Correo no válido. Este correo ya está registrado.
-                            </FormControlErrorText>
-                        </FormControlError>
+                        {/* No hay FormControlError porque es opcional */}
                     </FormControl>
 
+                    {/* --- Contraseña --- */}
                     <FormControl 
                         isRequired={true}
-                        // isInvalid={true}
+                        isInvalid={!!passwordError}
                         className="w-full"
+                        isDisabled={isSubmitting}
                     >
                         <FormControlLabel>
                             <FormControlLabelText className="text-lg">Contraseña</FormControlLabelText>
@@ -141,6 +238,11 @@ export default function Login() {
                             <InputField
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
+                                value={password}
+                                onChangeText={(text) => {
+                                    setPassword(text);
+                                    if (passwordError) setPasswordError('');
+                                }}
                             />
                             <InputSlot onPress={handleState} className="pr-4">
                                 <InputIcon
@@ -151,16 +253,16 @@ export default function Login() {
                         </Input>
                         <FormControlError>
                             <FormControlErrorIcon as={AlertCircleIcon} size="sm" />
-                            <FormControlErrorText>
-                                Contraseña incorrecta.
-                            </FormControlErrorText>
+                            <FormControlErrorText>{passwordError}</FormControlErrorText>
                         </FormControlError>
                     </FormControl>
 
+                    {/* --- Confirmar Contraseña --- */}
                     <FormControl 
                         isRequired={true}
-                        // isInvalid={true}
+                        isInvalid={!!confirmError}
                         className="w-full"
+                        isDisabled={isSubmitting}
                     >
                         <FormControlLabel>
                             <FormControlLabelText className="text-lg">Confirmar Contraseña</FormControlLabelText>
@@ -169,6 +271,11 @@ export default function Login() {
                             <InputField
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
+                                value={confirmPassword}
+                                onChangeText={(text) => {
+                                    setConfirmPassword(text);
+                                    if (confirmError) setConfirmError('');
+                                }}
                             />
                             <InputSlot onPress={handleState} className="pr-4">
                                 <InputIcon
@@ -179,30 +286,21 @@ export default function Login() {
                         </Input>
                         <FormControlError>
                             <FormControlErrorIcon as={AlertCircleIcon} size="sm" />
-                            <FormControlErrorText>
-                                Contraseña incorrecta.
-                            </FormControlErrorText>
+                            <FormControlErrorText>{confirmError}</FormControlErrorText>
                         </FormControlError>
-                        
-                        <Button
-                            variant="link"
-                            action="secondary"
-                            size="lg"
-                            className="self-end p-0"
-                            onPress={() => router.push('/forgot_password')}
-                        >
-                            <ButtonText>¿Olvidaste tu contraseña?</ButtonText>
-                        </Button>
                     </FormControl>
                 </Box>
                 <Box className="w-full items-center gap-y-3">
                     <Button
-                        onPress={() => {
-                            router.replace('/(tabs)');
-                        }}
+                        onPress={handleRegister}
                         className="w-full h-[45px] bg-primary-500 active:!bg-secondary-500"
+                        isDisabled={isSubmitting}
                     >
-                        <ButtonText className="text-2xl text-background-0">Registrar</ButtonText>
+                        {isSubmitting ? (
+                            <ActivityIndicator color="#FFFFFF" />
+                        ) : (
+                            <ButtonText className="text-2xl text-background-0">Registrar</ButtonText>
+                        )}
                     </Button>
                     
                     <Button
@@ -210,6 +308,7 @@ export default function Login() {
                         action="primary"
                         className="self-center" 
                         onPress={() => router.push('/login')}
+                        isDisabled={isSubmitting}
                     >
                         <ButtonText className="text-lg"> 
                             <Text className="text-typography-500 text-lg">

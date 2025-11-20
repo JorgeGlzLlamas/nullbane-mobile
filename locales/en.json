@@ -1,0 +1,74 @@
+{
+    "tabs":{
+        "home": "Home",
+        "chats": "Chats",
+        "profile": "Profile"
+    },
+    "home":{
+        "title": "Posts",
+        "fabLabel": "Post"
+    },
+    "profile":{
+        "title": "User Profile",
+        "edit": "Edit Profile",
+        "achievements": "Achievements Unlocked",
+        "settings": "Additional Settings",
+        "themeLabel": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "languageLabel": "Language",
+        "english": "English",
+        "spanish": "Spanish",
+        "changePassword": "Change Password",
+        "logout": "Logout"
+    },
+    "info-profile": {
+        "title": "Edit Profile Information",
+        "photo": "Change photo",
+        "nameLabel": "First Name",
+        "lastNameLabel": "Last Name",
+        "phoneLabel": "Phone Number",
+        "emailLabel": "Email",
+        "saveChanges": "Save Changes",
+        "avatarSuccess": "Avatar updated",
+        "uploadFailed": "An error occurred while uploading the avatar"
+    },
+    "chats":{
+        "placeholder": "Search chats...",
+        "fabLabel": "Friends",
+        "friendsPlaceholder": "Search for new firends...",
+        "requests": "Requests",
+        "suggestions": "Suggestions for you",
+        "results": "Results",
+        "searching": "Searching...",
+        "noResults": "No one found with that name"
+    },
+    "change_password": {
+        "title": "Change Password",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "saveChanges": "Save Changes"
+    },
+    "post": {
+        "comments": "Comments",
+        "commentPlaceholder": "Write your opinion...",
+        "publish": "Publish",
+        "createPost": "Create Post",
+        "titleLabel": "Title",
+        "titlePlaceholder": "Write your post title",
+        "imageLabel": "Image cover",
+        "imagePlaceholder": "Upload an image",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "What´s your post about?",
+        "publishButton": "Publish"
+    },
+    "achievements": {
+        "title": "Achievements",
+        "listAchievements": "List of Challenges",
+        "unlockButton": "Unlocked now",
+        "unlocked": "Completed",
+        "totalProgress": "Total Progress",
+        "unlockedIn": "Unlocked in"
+    }
+}

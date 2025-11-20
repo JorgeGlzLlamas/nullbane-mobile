@@ -1,0 +1,74 @@
+{
+    "tabs":{
+        "home": "Inicio",
+        "chats": "Chats",
+        "profile": "Perfil"
+    },
+    "home":{
+        "title": "Publicaciones",
+        "fabLabel": "Publicación"
+    },
+    "profile":{
+        "title": "Perfil Usuario",
+        "edit": "Editar Perfil",
+        "achievements": "Logros Desbloqueados",
+        "settings": "Ajustes Adicionales",
+        "themeLabel": "Tema",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "languageLabel": "Idioma",
+        "english": "Inglés",
+        "spanish": "Español",
+        "changePassword": "Cambiar Contraseña",
+        "logout": "Cerrar Sesión"
+    },
+    "info-profile": {
+        "title": "Editar Información Perfil",
+        "photo": "Cambiar foto",
+        "nameLabel": "Nombre(s)",
+        "lastNameLabel": "Apellidos",
+        "phoneLabel": "Número de Teléfono",
+        "emailLabel": "Correo Electrónico",
+        "saveChanges": "Guardar Cambios",
+        "avatarSuccess": "Avatar actualizado",
+        "uploadFailed": "Error al subir el avatar"
+    },
+    "chats": {
+        "placeholder": "Buscar chats...",
+        "fabLabel": "Amigos",
+        "friendsPlaceholder": "Buscar nuevos amigos...",
+        "requests": "Solicitudes",
+        "suggestions": "Sugerencias para ti",
+        "results": "Resultados",
+        "searching": "Buscando...",
+        "noResults": "No encontramos a nadie con ese nombre"
+    },
+    "change_password": {
+        "title": "Cambiar Contraseña",
+        "currentPassword": "Contraseña Actual",
+        "newPassword": "Nueva Contraseña",
+        "confirmNewPassword": "Confirmar Nueva Contraseña",
+        "saveChanges": "Guardar Cambios"
+    },
+    "post": {
+        "comments": "Comentarios",
+        "commentPlaceholder": "Escribe tu opinión...",
+        "publish": "Publicar",
+        "createPost": "Crear Publicación",
+        "titleLabel": "Título",
+        "titlePlaceholder": "Escribe el título de tu publicación",
+        "imageLabel": "Imagen de portada",
+        "imagePlaceholder": "Sube una imagen",
+        "descriptionLabel": "Descripción",
+        "descriptionPlaceholder": "¿De qué trata tu publicación?",
+        "publishButton": "Publicar"
+    },
+    "achievements": {
+        "title": "Logros",
+        "listAchievements": "Lista de Desafíos",
+        "unlockButton": "Desbloquear ahora",
+        "unlocked": "Completado",
+        "totalProgress": "Progreso Total",
+        "unlockedIn": "Obtenido el"
+    }
+}
